@@ -1,0 +1,96 @@
+-- CREATE TABLE "public".appusers
+-- (
+--     id                uuid         NOT NULL,
+--     username          varchar(50)  NOT NULL,
+--     password          varchar(100) NOT NULL,
+--     email             varchar(255) NOT NULL,
+--     registration_date timestamp(6) NOT NULL,
+--     CONSTRAINT appusers_pkey
+--         PRIMARY KEY (id),
+--     CONSTRAINT appusers_username_key
+--         UNIQUE (username),
+--     CONSTRAINT appusers_email_key
+--         UNIQUE (email)
+-- );
+-- CREATE TABLE "public".approles
+-- (
+--     id        uuid        NOT NULL,
+--     role_name varchar(50) NOT NULL,
+--     CONSTRAINT approles_pkey
+--         PRIMARY KEY (id),
+--     CONSTRAINT approles_role_name_key
+--         UNIQUE (role_name)
+-- );
+-- CREATE TABLE "public".achievements
+-- (
+--     id          uuid         NOT NULL,
+--     name        varchar(100) NOT NULL,
+--     description text         NOT NULL,
+--     photo       bytea        NOT NULL,
+--     points      int4         NOT NULL,
+--     "date"      timestamp(6) NOT NULL,
+--     id_monument uuid         NOT NULL,
+--     user_id     uuid         NOT NULL,
+--     CONSTRAINT achievements_pkey
+--         PRIMARY KEY (id)
+-- );
+-- CREATE TABLE "public".monumentspoi
+-- (
+--     id           uuid      NOT NULL,
+--     name         char(100) NOT NULL,
+--     description  text      NOT NULL,
+--     photo        bytea     NOT NULL,
+--     localization point     NOT NULL,
+--     CONSTRAINT monumentspoi_pkey
+--         PRIMARY KEY (id),
+--     CONSTRAINT monumentspoi_name_key
+--         UNIQUE (name)
+-- );
+-- CREATE TABLE "public".discussions
+-- (
+--     id     uuid         NOT NULL,
+--     text   text         NOT NULL,
+--     "date" timestamp(6) NOT NULL,
+--     CONSTRAINT discussions_pkey
+--         PRIMARY KEY (id)
+-- );
+-- CREATE TABLE "public".appusers_discussions
+-- (
+--     appusersid    uuid NOT NULL,
+--     discussionsid uuid NOT NULL,
+--     CONSTRAINT appusers_discussions_pkey
+--         PRIMARY KEY (appusersid,
+--                      discussionsid)
+-- );
+-- CREATE TABLE "public".discussions_monumentspoi
+-- (
+--     discussionsid  uuid NOT NULL,
+--     monumentspoiid uuid NOT NULL,
+--     CONSTRAINT discussions_monumentspoi_pkey
+--         PRIMARY KEY (discussionsid,
+--                      monumentspoiid)
+-- );
+-- CREATE TABLE "public".approles_appusers
+-- (
+--     approlesid uuid NOT NULL,
+--     appusersid uuid NOT NULL,
+--     CONSTRAINT approles_appusers_pkey
+--         PRIMARY KEY (approlesid,
+--                      appusersid)
+-- );
+-- -- ALTER TABLE "public".achievements
+-- --     ADD CONSTRAINT fkachievemen965740 FOREIGN KEY (user_id) REFERENCES "public".appusers (id);
+-- -- ALTER TABLE "public".achievements
+-- --     ADD CONSTRAINT fkachievemen203947 FOREIGN KEY (id_monument) REFERENCES "public".monumentspoi (id);
+-- -- ALTER TABLE "public".appusers_discussions
+-- --     ADD CONSTRAINT fkappusers_d766785 FOREIGN KEY (appusersid) REFERENCES "public".appusers (id);
+-- -- ALTER TABLE "public".appusers_discussions
+-- --     ADD CONSTRAINT fkappusers_d889100 FOREIGN KEY (discussionsid) REFERENCES "public".discussions (id);
+-- -- ALTER TABLE "public".discussions_monumentspoi
+-- --     ADD CONSTRAINT fkdiscussion569456 FOREIGN KEY (discussionsid) REFERENCES "public".discussions (id);
+-- -- ALTER TABLE "public".discussions_monumentspoi
+-- --     ADD CONSTRAINT fkdiscussion311792 FOREIGN KEY (monumentspoiid) REFERENCES "public".monumentspoi (id);
+-- -- ALTER TABLE "public".approles_appusers
+-- --     ADD CONSTRAINT fkapproles_a138479 FOREIGN KEY (approlesid) REFERENCES "public".approles (id);
+-- -- ALTER TABLE "public".approles_appusers
+-- --     ADD CONSTRAINT fkapproles_a697980 FOREIGN KEY (appusersid) REFERENCES "public".appusers (id);
