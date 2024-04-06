@@ -6,7 +6,7 @@ import lombok.Setter;
 import org.springframework.data.geo.Point;
 
 @Entity
-@Table(name = "monumentpoi")
+@Table(name = "monument_poi")
 @Getter
 @Setter
 public class MonumentPoi {

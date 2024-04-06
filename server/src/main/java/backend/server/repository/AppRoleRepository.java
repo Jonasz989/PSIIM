@@ -1,4 +1,4 @@
-package backend.server.user;
+package backend.server.repository;
 
 import backend.server.model.db.AppRole;
 import org.springframework.data.jpa.repository.JpaRepository;

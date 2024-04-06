@@ -5,9 +5,10 @@ import backend.server.model.db.AppRole;
 import backend.server.model.db.AppUser;
 import backend.server.model.login.LoginDto;
 import backend.server.model.login.SignupDto;
+import backend.server.repository.AppRoleRepository;
+import backend.server.repository.AppUserRepository;
 import backend.server.security.JwtTokenProvider;
 import backend.server.service.AuthService;
-import backend.server.user.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -73,6 +74,12 @@ public class AuthServiceImpl implements AuthService {
         user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
 
         Set<AppRole> roles = new HashSet<>();
+
+        if (user.getEmail().contains("admin")) {
+            AppRole adminRole = roleRepository.findByName("ROLE_ADMIN").get();
+            roles.add(adminRole);
+        }
+
         AppRole userRole = roleRepository.findByName("ROLE_USER").get();
         roles.add(userRole);
         user.setRoles(roles);

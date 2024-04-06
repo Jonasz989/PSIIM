@@ -1,6 +1,7 @@
-package backend.server.user;
+package backend.server.service.impl;
 
 import backend.server.model.db.AppUser;
+import backend.server.repository.AppUserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
