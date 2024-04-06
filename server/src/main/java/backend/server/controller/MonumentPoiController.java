@@ -25,7 +25,7 @@ public class MonumentPoiController {
     }
 
     @GetMapping("/pois/{poiId}")
-    public Optional<MonumentPoi> findById(int poiId) {
+    public Optional<MonumentPoi> findById(@PathVariable Integer poiId) {
         return monumentPoiService.findById(poiId);
     }
 
@@ -37,7 +37,7 @@ public class MonumentPoiController {
     }
 
     @DeleteMapping("/pois/{poiId}")
-    public void deleteById(int poiId) {
+    public void deleteById(@PathVariable Integer poiId) {
         monumentPoiService.deleteById(poiId);
     }
 

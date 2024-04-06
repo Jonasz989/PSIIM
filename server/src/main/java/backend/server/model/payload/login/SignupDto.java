@@ -1,4 +1,4 @@
-package backend.server.model.login;
+package backend.server.model.payload.login;
 
 import lombok.Data;
 

@@ -16,7 +16,7 @@ import lombok.Setter;
 public class AppUser {
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
 	@Size(min=2, message = "Name should have atleast 2 characters")

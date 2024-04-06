@@ -1,7 +1,7 @@
 package backend.server.auth;
 
-import backend.server.model.login.LoginDto;
-import backend.server.model.login.SignupDto;
+import backend.server.model.payload.login.LoginDto;
+import backend.server.model.payload.login.SignupDto;
 import backend.server.security.JWTAuthResponse;
 import backend.server.service.AuthService;
 import org.springframework.http.HttpStatus;

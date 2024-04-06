@@ -1,8 +1,8 @@
 package backend.server.service;
 
 
-import backend.server.model.login.LoginDto;
-import backend.server.model.login.SignupDto;
+import backend.server.model.payload.login.LoginDto;
+import backend.server.model.payload.login.SignupDto;
 
 public interface AuthService {
     String login(LoginDto loginDto);
