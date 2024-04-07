@@ -3,6 +3,7 @@ package backend.server.service.impl;
 import backend.server.location.LocationService;
 import backend.server.model.db.Achievement;
 import backend.server.model.payload.GetAchievementDto;
+import backend.server.model.payload.RankingDto;
 import backend.server.repository.AchievementRepository;
 import backend.server.repository.AppUserRepository;
 import backend.server.repository.MonumentPoiRepository;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 @Service
 public class AchievementServiceImpl implements AchievementService {
@@ -59,7 +62,7 @@ public class AchievementServiceImpl implements AchievementService {
         Achievement achievementToSave = new Achievement();
         monumentPoiRepository.findById((int) achievement.getMonumentId()).ifPresent(monumentPoi -> {
 
-            if (locationService.calculateDistance(achievement.getCurrentLocation().getX(), achievement.getCurrentLocation().getY(), monumentPoi.getLocalization().getX(), monumentPoi.getLocalization().getY()) < 100) {
+            if (locationService.calculateDistanceBetween2PointsInMeters(achievement.getCurrentLocation().getX(), achievement.getCurrentLocation().getY(), monumentPoi.getLocalization().getX(), monumentPoi.getLocalization().getY()) < 100) {
 
                 achievementToSave.setMonumentPoi(monumentPoi);
                 achievementToSave.setName("OSIAGNIECIE - " + monumentPoi.getName());
@@ -79,6 +82,15 @@ public class AchievementServiceImpl implements AchievementService {
 
     public boolean checkIfAchievementExistsByUserIdAndMonumentId(long userId, long monumentId) {
         return achievementRepository.existsAchievementByUserIdAndMonumentPoi_Id(userId, monumentId);
+    }
+
+    public List<RankingDto> getTop10UsersByTotalPoints() {
+        List<Object[]> results = achievementRepository.getTop10UsersByTotalPoints();
+
+        AtomicLong rank = new AtomicLong(1);
+        return results.stream()
+                .map(o -> new RankingDto((String) o[0], (long) o[1], rank.getAndIncrement()))
+                .collect(Collectors.toList());
     }
 
 }
