@@ -3,6 +3,7 @@ package backend.server.controller;
 import backend.server.model.db.Achievement;
 import backend.server.model.payload.GetAchievementDto;
 import backend.server.service.AchievementService;
+import backend.server.service.impl.AchievementServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,10 +15,12 @@ import java.util.Optional;
 public class AchievementController {
 
     private AchievementService achievementService;
+    private AchievementServiceImpl achievementServiceImpl;
 
     @Autowired
-    public AchievementController(AchievementService achievementService) {
+    public AchievementController(AchievementService achievementService, AchievementServiceImpl achievementServiceImpl) {
         this.achievementService = achievementService;
+        this.achievementServiceImpl = achievementServiceImpl;
     }
 
     @GetMapping("/achievements")
@@ -44,7 +47,7 @@ public class AchievementController {
 
     @PostMapping("/get-achievement")
     public Achievement getAchievement(@RequestBody GetAchievementDto achievement) {
-        return achievementService.getAchievement(achievement);
+        return achievementServiceImpl.getAchievement(achievement);
     }
 
 }

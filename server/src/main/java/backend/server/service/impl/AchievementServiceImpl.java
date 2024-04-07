@@ -59,6 +59,10 @@ public class AchievementServiceImpl implements AchievementService {
     @Override
     public Achievement getAchievement(GetAchievementDto achievement) {
 
+
+
+        if (!achievementRepository.existsAchievementByUserIdAndMonumentPoi_Id(achievement.getUserId(), achievement.getMonumentId())) {
+
         Achievement achievementToSave = new Achievement();
         monumentPoiRepository.findById((int) achievement.getMonumentId()).ifPresent(monumentPoi -> {
 
@@ -78,6 +82,11 @@ public class AchievementServiceImpl implements AchievementService {
         });
 
         return achievementRepository.save(achievementToSave);
+
+        } else {
+            throw new IllegalArgumentException("Juz zdobyles to osiagniecie");
+        }
+
     }
 
     public boolean checkIfAchievementExistsByUserIdAndMonumentId(long userId, long monumentId) {
