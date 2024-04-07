@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 @Setter
 @Getter
 @Entity
-@Table(name = "app_role")
+@Table(name = "app_roles")
 public class AppRole {
 
     @Id

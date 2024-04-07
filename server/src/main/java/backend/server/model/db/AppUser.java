@@ -2,6 +2,7 @@ package backend.server.model.db;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -10,7 +11,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Data
-@Entity(name = "app_user")
+@Entity(name = "app_users")
 @Getter
 @Setter
 public class AppUser {
@@ -23,6 +24,7 @@ public class AppUser {
 	@JsonProperty("name")
 	private String name;
 
+	@JsonIgnore
 	private String password;
 	
 	@JsonProperty("email")

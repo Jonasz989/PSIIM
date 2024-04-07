@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 
 
 @Data
-@Entity(name = "achievement")
+@Entity(name = "achievements")
 @Getter
 @Setter
 public class Achievement {
@@ -41,7 +41,7 @@ public class Achievement {
     private AppUser user;
 
     @ManyToOne
-    @JoinColumn(name = "monument_poi", referencedColumnName = "id")
+    @JoinColumn(name = "monument_pois", referencedColumnName = "id")
     private MonumentPoi monumentPoi;
 
     @Override

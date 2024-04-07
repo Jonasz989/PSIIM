@@ -1,5 +1,6 @@
 package backend.server.service.impl;
 
+import backend.server.model.db.Comment;
 import backend.server.repository.MonumentPoiRepository;
 import backend.server.model.db.MonumentPoi;
 import backend.server.service.MonumentPoiService;
@@ -29,18 +30,18 @@ public class MonumentPoiServiceImpl implements MonumentPoiService {
     public Optional<MonumentPoi> findById(int theId) {
         return monumentPoiRepository.findById(theId);
     }
+
     @Transactional
 
     @Override
     public MonumentPoi save(MonumentPoi theMonumentPoi) {
         return monumentPoiRepository.save(theMonumentPoi);
     }
+
     @Transactional
 
     @Override
     public void deleteById(int theId) {
         monumentPoiRepository.deleteById(theId);
     }
-
-
 }
