@@ -36,12 +36,6 @@ public class MonumentPoi {
     public MonumentPoi() {
     }
 
-    public MonumentPoi(String name, String description, byte[] photo, Point localization) {
-        this.name = name;
-        this.description = description;
-        this.photo = photo;
-        this.localization = localization;
-    }
 
     @Override
     public String toString() {

@@ -1,10 +1,12 @@
 package backend.server.controller;
 
 import backend.server.model.db.Comment;
+import backend.server.model.payload.CommentDto;
 import backend.server.service.impl.CommentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,7 +32,14 @@ public class CommentController {
     }
 
     @PostMapping("/comments")
-    public Comment save(@RequestBody Comment comment) {
+    public Comment save(@RequestBody CommentDto commentDto) {
+
+        Comment comment = new Comment();
+        comment.setUserId(commentDto.getUserId());
+        comment.setMonumentPoiId(commentDto.getMonumentPoiId());
+        comment.setText(commentDto.getText());
+        comment.setDate(LocalDateTime.now());
+
         return commentServiceImpl.save(comment);
     }
 

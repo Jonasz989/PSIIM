@@ -1,5 +1,6 @@
 package backend.server.model.db;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -19,9 +20,7 @@ public class Comment {
     private long id;
 
     @JsonProperty("userId")
-    @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private AppUser user;
+    private long userId;
 
     @JsonProperty("monumentPoiId")
     private long monumentPoiId;
