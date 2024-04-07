@@ -77,4 +77,8 @@ public class AchievementServiceImpl implements AchievementService {
         return achievementRepository.save(achievementToSave);
     }
 
+    public boolean checkIfAchievementExistsByUserIdAndMonumentId(long userId, long monumentId) {
+        return achievementRepository.existsAchievementByUserIdAndMonumentPoi_Id(userId, monumentId);
+    }
+
 }

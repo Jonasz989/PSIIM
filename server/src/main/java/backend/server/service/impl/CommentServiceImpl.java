@@ -13,10 +13,12 @@ import java.util.Optional;
 public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
+    private final AchievementServiceImpl achievementServiceImpl;
 
     @Autowired
-    public CommentServiceImpl(CommentRepository commentRepository) {
+    public CommentServiceImpl(CommentRepository commentRepository, AchievementServiceImpl achievementServiceImpl) {
         this.commentRepository = commentRepository;
+        this.achievementServiceImpl = achievementServiceImpl;
     }
 
     public Optional<Comment> getCommentByIdAndMonumentId(long id, long monumentId) {
@@ -28,7 +30,12 @@ public class CommentServiceImpl implements CommentService {
     }
 
     public Comment save(Comment comment) {
-        return commentRepository.save(comment);
+
+        if (achievementServiceImpl.checkIfAchievementExistsByUserIdAndMonumentId(comment.getUserId(), comment.getMonumentPoiId())) {
+            throw new IllegalArgumentException("You don't have permission to comment this monument");
+        } else {
+            return commentRepository.save(comment);
+        }
     }
 
     public void deleteById(long id) {
