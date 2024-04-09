@@ -2,6 +2,7 @@ package backend.server.service.impl;
 
 import backend.server.location.LocationService;
 import backend.server.model.db.Achievement;
+import backend.server.model.db.MonumentPoi;
 import backend.server.model.payload.GetAchievementDto;
 import backend.server.model.payload.RankingDto;
 import backend.server.repository.AchievementRepository;
@@ -57,35 +58,30 @@ public class AchievementServiceImpl implements AchievementService {
 
     @Override
     public Achievement getAchievement(GetAchievementDto achievement) {
-
-
-
+        //ifologia ; (
         if (!achievementRepository.existsAchievementByUserIdAndMonumentPoi_Id(achievement.getUserId(), achievement.getMonumentId())) {
-
-        Achievement achievementToSave = new Achievement();
-        monumentPoiRepository.findById((int) achievement.getMonumentId()).ifPresent(monumentPoi -> {
-
-            if (locationService.calculateDistanceBetween2PointsInMeters(achievement.getCurrentLocation().getX(), achievement.getCurrentLocation().getY(), monumentPoi.getLocalization().getX(), monumentPoi.getLocalization().getY()) < 100) {
-
-                achievementToSave.setMonumentPoi(monumentPoi);
-                achievementToSave.setName("OSIAGNIECIE - " + monumentPoi.getName());
-                achievementToSave.setDescription("Opis twojego zabytku - " + monumentPoi.getDescription());
-                achievementToSave.setPoints(100);
-                achievementToSave.setPhoto(achievement.getPhoto());
-                achievementToSave.setDate(LocalDateTime.now());
-                appUserRepository.findById(achievement.getUserId()).ifPresent(achievementToSave::setUser);
-
+            Optional<MonumentPoi> optionalMonumentPoi = monumentPoiRepository.findById((int) achievement.getMonumentId());
+            if (optionalMonumentPoi.isPresent()) {
+                MonumentPoi monumentPoi = optionalMonumentPoi.get();
+                if (locationService.calculateDistanceBetween2PointsInMeters(achievement.getCurrentLocation().getX(), achievement.getCurrentLocation().getY(), monumentPoi.getLocalization().getX(), monumentPoi.getLocalization().getY()) < 100) {
+                    Achievement achievementToSave = new Achievement();
+                    achievementToSave.setMonumentPoi(monumentPoi);
+                    achievementToSave.setName("OSIAGNIECIE - " + monumentPoi.getName());
+                    achievementToSave.setDescription("Opis twojego zabytku - " + monumentPoi.getDescription());
+                    achievementToSave.setPoints(100);
+                    achievementToSave.setPhoto(achievement.getPhoto());
+                    achievementToSave.setDate(LocalDateTime.now());
+                    appUserRepository.findById(achievement.getUserId()).ifPresent(achievementToSave::setUser);
+                    return achievementRepository.save(achievementToSave);
+                } else {
+                    throw new IllegalArgumentException("Nie jestes w poblizu zabytku");
+                }
             } else {
-                throw new IllegalArgumentException("Nie jestes w poblizu zabytku");
+                throw new IllegalArgumentException("Zabytek o podanym ID nie istnieje");
             }
-        });
-
-        return achievementRepository.save(achievementToSave);
-
         } else {
             throw new IllegalArgumentException("Juz zdobyles to osiagniecie");
         }
-
     }
 
     public boolean checkIfAchievementExistsByUserIdAndMonumentId(long userId, long monumentId) {

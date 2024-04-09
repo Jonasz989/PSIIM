@@ -75,12 +75,13 @@ public class AuthServiceImpl implements AuthService {
 
         Set<AppRole> roles = new HashSet<>();
 
+        //to make development easier, we will add admin role to any user that has admin in his email
         if (user.getEmail().contains("admin")) {
-            AppRole adminRole = roleRepository.findByName("ROLE_ADMIN").get();
+            AppRole adminRole = roleRepository.findByName("ADMIN").get();
             roles.add(adminRole);
         }
 
-        AppRole userRole = roleRepository.findByName("ROLE_USER").get();
+        AppRole userRole = roleRepository.findByName("USER").get();
         roles.add(userRole);
         user.setRoles(roles);
 

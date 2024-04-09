@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -54,9 +55,10 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize ->
                         authorize
-                                .requestMatchers("/**").hasRole("SUPER_ADMIN")
-                                .requestMatchers("/api/**").authenticated()
                                 .requestMatchers("/api/auth/**").permitAll()
+                                .requestMatchers("/**").hasAnyAuthority("SUPER_ADMIN", "ADMIN")
+                                .requestMatchers(HttpMethod.GET, "/api/**").hasAuthority("USER")
+                                .requestMatchers(HttpMethod.POST, "/api/get-achievement").hasAuthority("USER")
                                 .requestMatchers("/swagger-ui/**").permitAll()
                                 .requestMatchers("/v3/api-docs/**").permitAll()
                                 //.anyRequest().permitAll() // only for development purposes
