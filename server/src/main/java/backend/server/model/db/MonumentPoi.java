@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.geo.Point;
 
 @Entity
 @Table(name = "monument_pois")
@@ -29,9 +28,14 @@ public class MonumentPoi {
     @JsonProperty("photo")
     private byte[] photo;
 
-    @Column(name = "localization")
-    @JsonProperty("localization")
-    private Point localization;
+    @Column(name = "lon")
+    @JsonProperty("lon")
+    private double lon;
+
+    @Column(name = "lat")
+    @JsonProperty("lat")
+    private double lat;
+
 
     public MonumentPoi() {
     }

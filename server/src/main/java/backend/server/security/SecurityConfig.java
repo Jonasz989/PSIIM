@@ -55,13 +55,13 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize ->
                         authorize
-                                .requestMatchers("/api/auth/**").permitAll()
-                                .requestMatchers("/**").hasAnyAuthority("SUPER_ADMIN", "ADMIN")
-                                .requestMatchers(HttpMethod.GET, "/api/**").hasAuthority("USER")
-                                .requestMatchers(HttpMethod.POST, "/api/get-achievement").hasAuthority("USER")
-                                .requestMatchers("/swagger-ui/**").permitAll()
-                                .requestMatchers("/v3/api-docs/**").permitAll()
                                 //.anyRequest().permitAll() // only for development purposes
+                                .requestMatchers("/v3/api-docs/**").permitAll()
+                                .requestMatchers("/swagger-ui/**").permitAll()
+                                .requestMatchers("/api/auth/**").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/**").hasAnyAuthority("USER", "SUPER_ADMIN", "ADMIN")
+                                .requestMatchers(HttpMethod.POST, "/api/get-achievement").hasAnyAuthority("USER", "SUPER_ADMIN", "ADMIN")
+                                .requestMatchers("/**").hasAnyAuthority("SUPER_ADMIN", "ADMIN")
 
                 ).exceptionHandling( exception -> exception
                         .authenticationEntryPoint(authenticationEntryPoint)

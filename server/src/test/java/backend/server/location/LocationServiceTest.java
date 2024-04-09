@@ -11,7 +11,7 @@ public class LocationServiceTest {
     @Test
     public void testCalculateDistanceBetween2PointsInMeters() {
 
-        double lat1 = 1.00000000001;
+        double lat1 = 1.2;
         double lon1 = 1.0;
         double lat2 = 1.0;
         double lon2 = 1.0;

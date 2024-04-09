@@ -63,7 +63,7 @@ public class AchievementServiceImpl implements AchievementService {
             Optional<MonumentPoi> optionalMonumentPoi = monumentPoiRepository.findById((int) achievement.getMonumentId());
             if (optionalMonumentPoi.isPresent()) {
                 MonumentPoi monumentPoi = optionalMonumentPoi.get();
-                if (locationService.calculateDistanceBetween2PointsInMeters(achievement.getCurrentLocation().getX(), achievement.getCurrentLocation().getY(), monumentPoi.getLocalization().getX(), monumentPoi.getLocalization().getY()) < 100) {
+                if (locationService.calculateDistanceBetween2PointsInMeters(achievement.getLon(), achievement.getLat(), monumentPoi.getLon(), monumentPoi.getLat()) < 100) {
                     Achievement achievementToSave = new Achievement();
                     achievementToSave.setMonumentPoi(monumentPoi);
                     achievementToSave.setName("OSIAGNIECIE - " + monumentPoi.getName());

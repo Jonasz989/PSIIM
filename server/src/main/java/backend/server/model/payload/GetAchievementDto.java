@@ -1,19 +1,24 @@
 package backend.server.model.payload;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.Column;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.awt.*;
 
 @Data
 @Getter
 @Setter
 public class GetAchievementDto {
 
-    @JsonProperty("currentLocation")
-    Point currentLocation;
+    @Column(name = "lon")
+    @JsonProperty("lon")
+    private double lon;
+
+    @Column(name = "lat")
+    @JsonProperty("lat")
+    private double lat;
 
     @JsonProperty("photo")
     byte[] photo;
