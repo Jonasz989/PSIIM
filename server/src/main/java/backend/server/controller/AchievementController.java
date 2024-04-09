@@ -14,8 +14,8 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class AchievementController {
 
-    private AchievementService achievementService;
-    private AchievementServiceImpl achievementServiceImpl;
+    private final AchievementService achievementService;
+    private final AchievementServiceImpl achievementServiceImpl;
 
     @Autowired
     public AchievementController(AchievementService achievementService, AchievementServiceImpl achievementServiceImpl) {
@@ -36,8 +36,7 @@ public class AchievementController {
     @PostMapping("/achievements")
     public Achievement save(@RequestBody Achievement achievement) {
 
-        Achievement dbAchievement = achievement;
-        return achievementService.save(dbAchievement);
+        return achievementService.save(achievement);
     }
 
     @DeleteMapping("/achievements/{achievementId}")

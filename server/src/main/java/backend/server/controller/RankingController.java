@@ -14,7 +14,7 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class RankingController {
 
-    private AchievementServiceImpl achievementServiceImpl;
+    private final AchievementServiceImpl achievementServiceImpl;
 
     @Autowired
     public RankingController(AchievementServiceImpl achievementServiceImpl) {

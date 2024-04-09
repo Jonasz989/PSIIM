@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.stream.Collectors;
 
 @Service
 public class AchievementServiceImpl implements AchievementService {
@@ -99,7 +98,7 @@ public class AchievementServiceImpl implements AchievementService {
         AtomicLong rank = new AtomicLong(1);
         return results.stream()
                 .map(o -> new RankingDto((String) o[0], (long) o[1], rank.getAndIncrement()))
-                .collect(Collectors.toList());
+                .toList();
     }
 
 }
