@@ -44,7 +44,7 @@ public class AchievementController {
         achievementService.deleteById(achievementId);
     }
 
-    @PostMapping("/get-achievement")
+    @PostMapping("/achievements/achieve")
     public Achievement getAchievement(@RequestBody GetAchievementDto achievement) {
         return achievementServiceImpl.getAchievement(achievement);
     }
