@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'MainView.dart';
 
+//TODO: Login mechanism
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
