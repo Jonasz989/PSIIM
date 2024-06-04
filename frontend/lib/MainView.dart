@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'MapView.dart';
 import 'AlbumView.dart';
 import 'ProgressView.dart';
@@ -6,17 +7,20 @@ import 'LeaderboardView.dart';
 import 'SubmitView.dart';
 
 class MainView extends StatelessWidget {
+  final String accessToken;
+
+  MainView({required this.accessToken});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
             colors: [
-              Colors.blue,
-              Colors.red,
+              Color.fromARGB(204, 255, 88, 252),
+              Color.fromARGB(247, 60, 0, 255),
             ],
           ),
         ),
@@ -33,12 +37,33 @@ class MainView extends StatelessWidget {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => MapView()),
+                      MaterialPageRoute(
+                          builder: (context) => MapView(
+                                accessToken: accessToken,
+                              )),
                     );
                   },
                   child: Container(
-                    color: Colors.blue,
-                    child: Center(child: Text('Map')),
+                    decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: <Color>[
+                          Color.fromARGB(120, 78, 3, 198),
+                          Color.fromARGB(179, 205, 46, 233),
+                          Color.fromARGB(255, 191, 0, 209),
+                        ])),
+                    child: const Center(
+                      child: Text(
+                        'Map',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                          color: Color.fromARGB(255, 30, 30, 30),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -53,8 +78,26 @@ class MainView extends StatelessWidget {
                     );
                   },
                   child: Container(
-                    color: Colors.green,
-                    child: Center(child: Text('Album')),
+                    decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: <Color>[
+                          Color.fromARGB(120, 78, 3, 198),
+                          Color.fromARGB(179, 205, 46, 233),
+                          Color.fromARGB(255, 191, 0, 209),
+                        ])),
+                    child: const Center(
+                      child: Text(
+                        'Album',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                          color: Color.fromARGB(255, 30, 30, 30),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -69,8 +112,26 @@ class MainView extends StatelessWidget {
                     );
                   },
                   child: Container(
-                    color: Colors.yellow,
-                    child: Center(child: Text('Progress')),
+                    decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: <Color>[
+                          Color.fromARGB(120, 78, 3, 198),
+                          Color.fromARGB(179, 205, 46, 233),
+                          Color.fromARGB(255, 191, 0, 209),
+                        ])),
+                    child: const Center(
+                      child: Text(
+                        'Progress',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                          color: Color.fromARGB(255, 30, 30, 30),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -82,12 +143,32 @@ class MainView extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => LeaderboardView()),
+                          builder: (context) => LeaderboardView(
+                                accessToken: accessToken,
+                              )),
                     );
                   },
                   child: Container(
-                    color: Colors.red,
-                    child: Center(child: Text('Leaderboard')),
+                    decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: <Color>[
+                          Color.fromARGB(120, 78, 3, 198),
+                          Color.fromARGB(179, 205, 46, 233),
+                          Color.fromARGB(255, 191, 0, 209),
+                        ])),
+                    child: const Center(
+                      child: Text(
+                        'Ranking',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                          color: Color.fromARGB(255, 30, 30, 30),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -102,8 +183,26 @@ class MainView extends StatelessWidget {
                     );
                   },
                   child: Container(
-                    color: Colors.purple,
-                    child: Center(child: Text('Submit a F.A.M code')),
+                    decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: <Color>[
+                          Color.fromARGB(255, 2, 57, 255),
+                          Color.fromARGB(255, 46, 124, 233),
+                          Color.fromARGB(255, 0, 143, 209),
+                        ])),
+                    child: const Center(
+                      child: Text(
+                        'Submit F.A.M code',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                          color: Color.fromARGB(255, 30, 30, 30),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),

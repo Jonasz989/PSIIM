@@ -1,18 +1,75 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
-class User {
-  final String imagePath;
+class LeaderboardUser {
   final String name;
+  final int points;
+  final int position;
 
-  User(this.imagePath, this.name);
+  LeaderboardUser({
+    required this.name,
+    required this.points,
+    required this.position,
+  });
+
+  factory LeaderboardUser.fromJson(Map<String, dynamic> json) {
+    return LeaderboardUser(
+      name: json['name'],
+      points: json['points'],
+      position: json['position'],
+    );
+  }
 }
 
-class LeaderboardView extends StatelessWidget {
-  final List<User> users = [
-    User('assets/images/user1.jpg', 'John Doe'),
-    User('assets/images/user2.jpg', 'Jane Doe'),
-    // Add more users here
-  ];
+class LeaderboardView extends StatefulWidget {
+  final String accessToken;
+  LeaderboardView({required this.accessToken});
+
+  @override
+  _LeaderboardState createState() =>
+      _LeaderboardState(accessToken: accessToken);
+}
+
+class _LeaderboardState extends State<LeaderboardView> {
+  List<LeaderboardUser> users = [];
+  final String accessToken;
+
+  _LeaderboardState({required this.accessToken});
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchPeople();
+  }
+
+  Future<void> _fetchPeople() async {
+    final String apiUrl = 'http://10.0.2.2:8080/api/ranking';
+    final String token = accessToken;
+    try {
+      final response = await http.get(
+        Uri.parse(apiUrl),
+        headers: {
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = jsonDecode(response.body);
+        print('Data received: $data');
+
+        setState(() {
+          users = data.map((json) => LeaderboardUser.fromJson(json)).toList();
+          users.sort((a, b) =>
+              b.points.compareTo(a.points)); // Sort by points descending
+        });
+      } else {
+        throw Exception('Failed to fetch leaderboard: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error fetching leaderboard: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +77,7 @@ class LeaderboardView extends StatelessWidget {
       body: Stack(
         children: <Widget>[
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topRight,
                 end: Alignment.bottomLeft,
@@ -48,12 +105,15 @@ class LeaderboardView extends StatelessWidget {
                       itemBuilder: (context, index) {
                         return ListTile(
                           leading: CircleAvatar(
-                            backgroundImage: AssetImage(users[index].imagePath),
+                            backgroundImage: AssetImage(
+                                'assets/images/user_placeholder.jpg'), // Placeholder image
                           ),
                           title: Text(
                             users[index].name,
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
+                          subtitle: Text('Points: ${users[index].points}'),
+                          trailing: Text('Position: ${users[index].position}'),
                         );
                       },
                     ),
