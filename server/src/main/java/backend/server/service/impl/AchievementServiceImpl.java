@@ -97,4 +97,9 @@ public class AchievementServiceImpl implements AchievementService {
                 .toList();
     }
 
+    @Override
+    public List<Achievement> findAchievementsByUserId(Long userId) {
+        return achievementRepository.findByUserId(userId);
+    }
+
 }

@@ -19,5 +19,6 @@ public interface AchievementRepository extends JpaRepository<Achievement, Intege
             "LIMIT 10")
     List<Object[]> getTop10UsersByTotalPoints();
 
+    List<Achievement> findByUserId(Long userId);
 
 }

@@ -49,4 +49,9 @@ public class AchievementController {
         return achievementServiceImpl.getAchievement(achievement);
     }
 
+    @GetMapping("/users/{userId}/achievements")
+    public List<Achievement> getAchievementsByUserId(@PathVariable Long userId) {
+        return achievementService.findAchievementsByUserId(userId);
+    }
+
 }

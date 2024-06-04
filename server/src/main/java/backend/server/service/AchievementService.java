@@ -14,4 +14,5 @@ public interface AchievementService {
     void deleteById(Integer theId);
 
     Achievement getAchievement(GetAchievementDto achievement);
+    List<Achievement> findAchievementsByUserId(Long userId);
 }
