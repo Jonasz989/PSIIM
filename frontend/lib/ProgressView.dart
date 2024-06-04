@@ -4,7 +4,6 @@ class ProgressView extends StatelessWidget {
   final List<Achievement> achievements = [
     Achievement('Achievement 1', 'assets/images/win.jpg', 0.5, '5 out of 10'),
     Achievement('Achievement 2', 'assets/images/win.jpg', 0.7, '7 out of 10'),
-    // Add more achievements here
   ];
 
   @override
@@ -18,8 +17,8 @@ class ProgressView extends StatelessWidget {
                 begin: Alignment.topRight,
                 end: Alignment.bottomLeft,
                 colors: [
-                  Colors.blue,
-                  Colors.red,
+                  Color.fromARGB(204, 255, 88, 252),
+                  Color.fromARGB(247, 60, 0, 255),
                 ],
               ),
             ),

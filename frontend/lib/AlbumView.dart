@@ -4,15 +4,14 @@ class AlbumView extends StatelessWidget {
   final List<Map<String, dynamic>> places = [
     {
       'image': 'assets/images/wyspa.jpg',
-      'name': 'Place 1',
-      'description': 'This is place 1',
+      'name': 'Wyspa Slodowa',
+      'description': 'piwko mmmm',
     },
     {
       'image': 'assets/images/wyspa.jpg',
-      'name': 'Place 2',
-      'description': 'This is place 2',
+      'name': 'Wyspa Slodowa part 2',
+      'description': 'chlopcy z miasta pija piasta',
     },
-    // Add more places here
   ];
 
   @override
@@ -26,8 +25,8 @@ class AlbumView extends StatelessWidget {
                 begin: Alignment.topRight,
                 end: Alignment.bottomLeft,
                 colors: [
-                  Colors.blue,
-                  Colors.red,
+                  Color.fromARGB(204, 255, 88, 252),
+                  Color.fromARGB(247, 60, 0, 255),
                 ],
               ),
             ),
@@ -52,7 +51,6 @@ class AlbumView extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 50.0,
                   fontWeight: FontWeight.bold,
-                  //fontFamily: 'Roboto',
                 ),
               ),
             ),

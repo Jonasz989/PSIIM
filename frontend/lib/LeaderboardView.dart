@@ -60,8 +60,7 @@ class _LeaderboardState extends State<LeaderboardView> {
 
         setState(() {
           users = data.map((json) => LeaderboardUser.fromJson(json)).toList();
-          users.sort((a, b) =>
-              b.points.compareTo(a.points)); // Sort by points descending
+          users.sort((a, b) => b.points.compareTo(a.points));
         });
       } else {
         throw Exception('Failed to fetch leaderboard: ${response.statusCode}');
@@ -82,8 +81,8 @@ class _LeaderboardState extends State<LeaderboardView> {
                 begin: Alignment.topRight,
                 end: Alignment.bottomLeft,
                 colors: [
-                  Colors.blue,
-                  Colors.red,
+                  Color.fromARGB(204, 255, 88, 252),
+                  Color.fromARGB(247, 60, 0, 255),
                 ],
               ),
             ),
@@ -106,7 +105,7 @@ class _LeaderboardState extends State<LeaderboardView> {
                         return ListTile(
                           leading: CircleAvatar(
                             backgroundImage: AssetImage(
-                                'assets/images/user_placeholder.jpg'), // Placeholder image
+                                'assets/images/user_placeholder.jpg'),
                           ),
                           title: Text(
                             users[index].name,

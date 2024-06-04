@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'LoginScreen.dart'; // import the LoginScreen
+import 'LoginScreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -20,12 +20,12 @@ class MyApp extends StatelessWidget {
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
             colors: [
-              Colors.blue,
-              Colors.red,
+              Color.fromARGB(204, 255, 88, 252),
+              Color.fromARGB(247, 60, 0, 255),
             ],
           ),
         ),
-        child: LoginScreen(), // use the LoginScreen
+        child: LoginScreen(),
       ),
     );
   }

@@ -173,7 +173,7 @@ class MainView extends StatelessWidget {
                 ),
               ),
               Container(
-                width: 140 * 2 + 30, // width of two tiles and their spacing
+                width: 140 * 2 + 30,
                 height: 89,
                 child: InkWell(
                   onTap: () {

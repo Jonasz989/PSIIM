@@ -13,8 +13,6 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _usernameController = TextEditingController();
-  final _passwordController = TextEditingController();
   String username = '';
   String password = '';
   Future<PostLogin?>? post;
@@ -25,26 +23,16 @@ class _LoginScreenState extends State<LoginScreen> {
       'password': password
     };
 
-    // Convert the request map to a JSON string
     String requestBody = jsonEncode(request);
 
-    // Log the request body for debugging purposes
     print('Request body: $requestBody');
 
-    // Update this line based on your environment (emulator, simulator, or real device)
-    final uri =
-        Uri.parse("http://10.0.2.2:8080/api/auth/login"); // Android Emulator
-    // final uri = Uri.parse("http://192.168.x.x:8080/api/auth/login"); // iOS Simulator or Real Device
+    final uri = Uri.parse("http://10.0.2.2:8080/api/auth/login");
 
     try {
-      // Include the headers for JSON content
       final response = await http.post(uri, body: requestBody, headers: {
         'Content-Type': 'application/json',
       });
-
-      // Log response status code and body
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
 
       if (response.statusCode == 200) {
         return PostLogin.fromJson(jsonDecode(response.body));
@@ -54,16 +42,12 @@ class _LoginScreenState extends State<LoginScreen> {
         throw Exception('Failed to load post: ${response.statusCode}');
       }
     } catch (e) {
-      // Log the exception for debugging purposes
-      print('Exception caught: $e');
       throw e;
     }
   }
 
   void clickSubmitButton() {
     setState(() {
-      username = _usernameController.text;
-      password = _passwordController.text;
       post = authenticate();
     });
   }
@@ -80,19 +64,18 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 TextFormField(
-                  controller: _usernameController,
                   decoration: InputDecoration(
                     labelText: 'Username',
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your username';
-                    }
+                    } else
+                      username = value;
                     return null;
                   },
                 ),
                 TextFormField(
-                  controller: _passwordController,
                   decoration: InputDecoration(
                     labelText: 'Password',
                   ),
@@ -100,7 +83,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your password';
-                    }
+                    } else
+                      password = value;
                     return null;
                   },
                 ),
@@ -118,11 +102,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               ConnectionState.waiting) {
                             return const CircularProgressIndicator();
                           } else if (snapshot.hasError) {
-                            // Log the error for debugging purposes
-                            print('Snapshot error: ${snapshot.error}');
                             return Text('Error: ${snapshot.error}');
                           } else if (snapshot.hasData) {
-                            // Data is successfully received, navigate to MainView
                             WidgetsBinding.instance.addPostFrameCallback((_) {
                               Navigator.pushReplacement(
                                 context,
@@ -148,7 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       clickSubmitButton();
                     }
                   },
-                  child: Text('Go to Main View'),
+                  child: Text('Log In'),
                 ),
               ],
             ),

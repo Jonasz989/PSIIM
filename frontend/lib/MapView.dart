@@ -25,8 +25,7 @@ class _MapState extends State<MapView> {
   }
 
   Future<void> _fetchPoints() async {
-    final String apiUrl =
-        'http://10.0.2.2:8080/api/pois'; // Assuming this is your API endpoint
+    final String apiUrl = 'http://10.0.2.2:8080/api/pois';
     final String token = accessToken;
 
     try {
