@@ -2,25 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class LeaderboardUser {
-  final String name;
-  final int points;
-  final int position;
-
-  LeaderboardUser({
-    required this.name,
-    required this.points,
-    required this.position,
-  });
-
-  factory LeaderboardUser.fromJson(Map<String, dynamic> json) {
-    return LeaderboardUser(
-      name: json['name'],
-      points: json['points'],
-      position: json['position'],
-    );
-  }
-}
+import 'package:frontend/GetLeaderboard.dart';
 
 class LeaderboardView extends StatefulWidget {
   final String accessToken;
@@ -32,7 +14,7 @@ class LeaderboardView extends StatefulWidget {
 }
 
 class _LeaderboardState extends State<LeaderboardView> {
-  List<LeaderboardUser> users = [];
+  List<GetLeaderboard> users = [];
   final String accessToken;
 
   _LeaderboardState({required this.accessToken});
@@ -59,7 +41,7 @@ class _LeaderboardState extends State<LeaderboardView> {
         print('Data received: $data');
 
         setState(() {
-          users = data.map((json) => LeaderboardUser.fromJson(json)).toList();
+          users = data.map((json) => GetLeaderboard.fromJson(json)).toList();
           users.sort((a, b) => b.points.compareTo(a.points));
         });
       } else {
