@@ -74,7 +74,10 @@ class MainView extends StatelessWidget {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => AlbumView()),
+                      MaterialPageRoute(
+                          builder: (context) => AlbumView(
+                                accessToken: accessToken,
+                              )),
                     );
                   },
                   child: Container(
