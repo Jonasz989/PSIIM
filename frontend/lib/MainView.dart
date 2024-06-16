@@ -182,7 +182,10 @@ class MainView extends StatelessWidget {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => SubmitView()),
+                      MaterialPageRoute(
+                          builder: (context) => SubmitView(
+                                accessToken: accessToken,
+                              )),
                     );
                   },
                   child: Container(
