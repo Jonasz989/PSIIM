@@ -1,6 +1,7 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class SubmitView extends StatefulWidget {
   @override
@@ -9,7 +10,30 @@ class SubmitView extends StatefulWidget {
 
 class _SubmitViewState extends State<SubmitView> {
   late MobileScannerController controller;
-  late StreamSubscription<Barcode> barcodeSubscription;
+  bool isScanning = false;
+
+  Future<void> sendAchievement(int monumentId, int userId) async {
+    var url = Uri.parse('http://192.168.1.2:8080/api/achievements/achieve');
+    var response = await http.post(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, dynamic>{
+        'lon': 0,
+        'lat': 0,
+        'photo': ['string'],
+        'monumentId': monumentId,
+        'userId': userId,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      print('Achievement sent successfully');
+    } else {
+      print('Failed to send achievement: ${response.statusCode}');
+    }
+  }
 
   @override
   void initState() {
@@ -17,12 +41,38 @@ class _SubmitViewState extends State<SubmitView> {
     controller = MobileScannerController();
     controller.start();
 
-    // Listen to the barcodes stream and handle the scanned data.
-    StreamSubscription<BarcodeCapture> barcodeSubscription =
-        controller.barcodes.listen((barcode) {
-      // Handle the scanned data here.
-      // Make sure to access a property that exists on BarcodeCapture.
-      print('Scanned barcode: ${barcode.raw}');
+    controller.barcodes.listen((barcode) {
+      if (isScanning) {
+        String displayvalue = barcode.raw.toString();
+        var match = RegExp(r'displayValue: (\d+)').firstMatch(displayvalue);
+        String extractedNumber = '';
+        if (match != null) {
+          extractedNumber = match.group(1) ?? '';
+        }
+        int extractedNumberInt = int.parse(extractedNumber);
+        print('Scanned barcode: $displayvalue');
+        isScanning = false;
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Scan Result'),
+              content: Text(
+                  'Scanned barcode: $displayvalue\nExtracted number: $extractedNumber'),
+              actions: <Widget>[
+                TextButton(
+                  child: Text('OK'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                    sendAchievement(extractedNumberInt, 2);
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      }
     });
   }
 
@@ -32,33 +82,27 @@ class _SubmitViewState extends State<SubmitView> {
       body: Stack(
         children: <Widget>[
           MobileScanner(controller: controller),
-          Center(
-            child: Container(
-              width: 250,
-              height: 250,
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.white, width: 2),
-              ),
-            ),
-          ),
           Positioned(
             top: 60.0,
             left: 40.0,
-            child: FloatingActionButton(
+            child: IconButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: Icon(Icons.arrow_back),
-              backgroundColor: Colors.blue,
+              icon: Icon(Icons.arrow_back),
+              color: Colors.blue,
+            ),
+          ),
+          Positioned(
+            bottom: 20.0,
+            left: MediaQuery.of(context).size.width / 2 - 28,
+            child: FloatingActionButton(
+              onPressed: () => setState(() {
+                isScanning = true;
+              }),
+              child: Icon(Icons.camera),
             ),
           ),
         ],
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    barcodeSubscription.cancel();
-    super.dispose();
   }
 }

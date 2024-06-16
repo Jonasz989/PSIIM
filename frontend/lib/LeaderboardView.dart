@@ -44,7 +44,7 @@ class _LeaderboardState extends State<LeaderboardView> {
   }
 
   Future<void> _fetchPeople() async {
-    final String apiUrl = 'http://10.0.2.2:8080/api/ranking';
+    final String apiUrl = 'http://192.168.1.2:8080/api/ranking';
     final String token = accessToken;
     try {
       final response = await http.get(
