@@ -4,6 +4,10 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class SubmitView extends StatefulWidget {
+  final String accessToken;
+
+  SubmitView({required this.accessToken});
+
   @override
   _SubmitViewState createState() => _SubmitViewState();
 }
@@ -18,11 +22,12 @@ class _SubmitViewState extends State<SubmitView> {
       url,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer ${widget.accessToken}',
       },
       body: jsonEncode(<String, dynamic>{
-        'lon': 0,
-        'lat': 0,
-        'photo': ['string'],
+        'lon': '',
+        'lat': '',
+        'photo': '',
         'monumentId': monumentId,
         'userId': userId,
       }),
@@ -32,6 +37,24 @@ class _SubmitViewState extends State<SubmitView> {
       print('Achievement sent successfully');
     } else {
       print('Failed to send achievement: ${response.statusCode}');
+    }
+  }
+
+  Future<int> getUserId(String accessToken) async {
+    var url = Uri.parse('http://192.168.1.2:8080/api/user');
+    var response = await http.get(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $accessToken',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      return data['id'];
+    } else {
+      throw Exception('Failed to get user ID');
     }
   }
 
@@ -65,7 +88,9 @@ class _SubmitViewState extends State<SubmitView> {
                   onPressed: () {
                     Navigator.of(context).pop();
                     Navigator.of(context).pop();
-                    sendAchievement(extractedNumberInt, 2);
+                    getUserId(widget.accessToken).then((userId) {
+                      sendAchievement(extractedNumberInt, userId);
+                    });
                   },
                 ),
               ],
