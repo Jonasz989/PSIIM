@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:frontend/GetPoints.dart';
+import 'ForumView.dart';
 
 class AlbumView extends StatefulWidget {
   final String accessToken;
@@ -84,58 +85,73 @@ class _AlbumState extends State<AlbumView> {
             ),
           ),
           Positioned(
-              top: MediaQuery.of(context).size.height * 0.3,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              child: FutureBuilder<List<GetPoints>>(
-                  future: monuments,
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(child: CircularProgressIndicator());
-                    } else if (snapshot.hasError) {
-                      return Center(
-                          child:
-                              Text('Something went wrong: ${snapshot.error}'));
-                    } else {
-                      if (snapshot.hasData) {
-                        final places = snapshot.data ?? [];
-                        return ListView.builder(
-                          itemCount: places.length,
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Row(
+            top: MediaQuery.of(context).size.height * 0.3,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: FutureBuilder<List<GetPoints>>(
+              future: monuments,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(
+                    child: Text('Something went wrong: ${snapshot.error}'),
+                  );
+                } else {
+                  if (snapshot.hasData) {
+                    final places = snapshot.data ?? [];
+                    return ListView.builder(
+                      itemCount: places.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Row(
+                            children: <Widget>[
+                              Container(
+                                height: 50,
+                                child: Image.asset(
+                                  'assets/images/wyspa.jpg',
+                                  width: 171,
+                                  fit: BoxFit.fitWidth,
+                                ),
+                              ),
+                              SizedBox(width: 10),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  Container(
-                                    height: 50,
-                                    child: Image.asset(
-                                      'assets/images/wyspa.jpg',
-                                      width: 171,
-                                      fit: BoxFit.fitWidth,
-                                    ),
+                                  Text(
+                                    places[index].name,
+                                    style: TextStyle(fontSize: 20),
                                   ),
-                                  SizedBox(width: 10),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                        places[index].name,
-                                        style: TextStyle(fontSize: 20),
-                                      ),
-                                      Text(places[index].description),
-                                    ],
+                                  Text(places[index].description),
+                                  SizedBox(height: 5),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => ForumView(
+                                                  accessToken: accessToken,
+                                                  monumentId: places[index]
+                                                      .id
+                                                      .toString())));
+                                    },
+                                    child: Text('Comments'),
                                   ),
                                 ],
                               ),
-                            );
-                          },
+                            ],
+                          ),
                         );
-                      }
-                    }
-                    return Container();
-                  })),
+                      },
+                    );
+                  }
+                }
+                return Container();
+              },
+            ),
+          ),
         ],
       ),
     );

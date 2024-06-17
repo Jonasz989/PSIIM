@@ -31,7 +31,7 @@ public class CommentServiceImpl implements CommentService {
 
     public Comment save(Comment comment) {
 
-        if (achievementServiceImpl.checkIfAchievementExistsByUserIdAndMonumentId(comment.getUserId(), comment.getMonumentPoiId())) {
+        if (!achievementServiceImpl.checkIfAchievementExistsByUserIdAndMonumentId(comment.getUserId(), comment.getMonumentPoiId())) {
             throw new IllegalArgumentException("You don't have permission to comment this monument");
         } else {
             return commentRepository.save(comment);
