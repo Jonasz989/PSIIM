@@ -26,9 +26,9 @@ class MainView extends StatelessWidget {
         ),
         child: Center(
           child: Wrap(
-            spacing: 30, // space between the tiles
-            runSpacing: 30, // space between the rows
-            alignment: WrapAlignment.center, // center the tiles
+            spacing: 30,
+            runSpacing: 30,
+            alignment: WrapAlignment.center,
             children: <Widget>[
               Container(
                 width: 140,

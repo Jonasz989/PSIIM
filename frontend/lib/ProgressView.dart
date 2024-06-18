@@ -32,7 +32,8 @@ class _ProgressViewState extends State<ProgressView> {
   }
 
   Future<List<GetAchievements>> _fetchAchievements() async {
-    final String apiUrl = "http://10.0.2.2:8080/api/achievements";
+    final String apiUrl =
+        "https://psiim-82a14bc94a7d.herokuapp.com/api/achievements";
     try {
       final response = await http.get(
         Uri.parse(apiUrl),

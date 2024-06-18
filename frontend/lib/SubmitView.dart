@@ -17,7 +17,8 @@ class _SubmitViewState extends State<SubmitView> {
   bool isScanning = false;
 
   Future<void> sendAchievement(int monumentId, int userId) async {
-    var url = Uri.parse('http://192.168.1.2:8080/api/achievements/achieve');
+    var url = Uri.parse(
+        'https://psiim-82a14bc94a7d.herokuapp.com/api/achievements/achieve');
     var response = await http.post(
       url,
       headers: <String, String>{

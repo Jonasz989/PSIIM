@@ -23,7 +23,7 @@ class _AlbumState extends State<AlbumView> {
   }
 
   Future<List<GetPoints>> _fetchMonuments() async {
-    final String apiUrl = 'http://10.0.2.2:8080/api/pois';
+    final String apiUrl = 'https://psiim-82a14bc94a7d.herokuapp.com/api/pois';
     try {
       final response = await http.get(
         Uri.parse(apiUrl),

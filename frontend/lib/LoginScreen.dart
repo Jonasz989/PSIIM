@@ -24,10 +24,8 @@ class _LoginScreenState extends State<LoginScreen> {
     };
 
     String requestBody = jsonEncode(request);
-
-    print('Request body: $requestBody');
-
-    final uri = Uri.parse("http://10.0.2.2:8080/api/auth/login");
+    final uri =
+        Uri.parse("https://psiim-82a14bc94a7d.herokuapp.com/api/auth/login");
 
     try {
       final response = await http.post(uri, body: requestBody, headers: {
