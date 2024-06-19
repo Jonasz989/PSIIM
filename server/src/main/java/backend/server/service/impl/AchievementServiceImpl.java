@@ -63,7 +63,7 @@ public class AchievementServiceImpl implements AchievementService {
             Optional<MonumentPoi> optionalMonumentPoi = monumentPoiRepository.findById((int) achievement.getMonumentId());
             if (optionalMonumentPoi.isPresent()) {
                 MonumentPoi monumentPoi = optionalMonumentPoi.get();
-                if (locationService.calculateDistanceBetween2PointsInMeters(achievement.getLon(), achievement.getLat(), monumentPoi.getLon(), monumentPoi.getLat()) < 100) {
+                //if (locationService.calculateDistanceBetween2PointsInMeters(achievement.getLon(), achievement.getLat(), monumentPoi.getLon(), monumentPoi.getLat()) < 100) {
                     Achievement achievementToSave = new Achievement();
                     achievementToSave.setMonumentPoi(monumentPoi);
                     achievementToSave.setName("OSIAGNIECIE - " + monumentPoi.getName());
@@ -73,9 +73,9 @@ public class AchievementServiceImpl implements AchievementService {
                     achievementToSave.setDate(LocalDateTime.now());
                     appUserRepository.findById(achievement.getUserId()).ifPresent(achievementToSave::setUser);
                     return achievementRepository.save(achievementToSave);
-                } else {
-                    throw new IllegalArgumentException("Nie jestes w poblizu zabytku");
-                }
+                //} else {
+                  //  throw new IllegalArgumentException("Nie jestes w poblizu zabytku");
+                //}
             } else {
                 throw new IllegalArgumentException("Zabytek o podanym ID nie istnieje");
             }
